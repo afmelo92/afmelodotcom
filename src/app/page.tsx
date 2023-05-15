@@ -1,116 +1,406 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+"use client";
 
-const inter = Inter({ subsets: ['latin'] })
+import { useState } from "react";
+import GithubIcon from "@/assets/icons/github";
+import JavascriptIcon from "@/assets/icons/javascript";
+import MailIcon from "@/assets/icons/mail";
+import NodeJSIcon from "@/assets/icons/nodejs";
+import ReactIcon from "@/assets/icons/react";
+import WhatsappIcon from "@/assets/icons/whatsapp";
+import Link from "next/link";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useScroll,
+  useSpring,
+} from "framer-motion";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+  const x = useMotionValue(0);
+  const background = useTransform(
+    x,
+    [-100, 0, 100],
+    ["#ff008c", "rgba(255,255,255,0)", "rgb(230, 255, 0)"]
+  );
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="flex min-h-screen flex-col items-center justify-center text-center bg-neutral-900 text-white overflow-x-hidden">
+      <motion.div className="progress-bar" style={{ scaleX }} />
+      <motion.header
+        className="w-full h-16 flex items-center justify-center"
+        initial={{ y: "-100%" }}
+        transition={{ duration: 0.4 }}
+        whileInView={{
+          y: 0,
+        }}
+      >
+        <div className="container m-auto flex items-center justify-evenly">
+          <motion.a
+            className="border-2 border-red-500 w-96 py-2 px-8 rounded bg-red-200 bg-opacity-30 text-red-400 font-semibold cursor-pointer hover:border-green-500 hover:bg-green-200 hover:text-green-500"
+            onHoverStart={() => setIsOpen(!isOpen)}
+            onHoverEnd={() => setIsOpen(!isOpen)}
+            href="https://api.whatsapp.com/send?phone=5541999013657&text=I%20really%20wanna%20hire%20yoru%20services,%20Mr%20Andre"
+            target="blank"
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            {isOpen
+              ? `🤜🤛 Contact now!`
+              : "🤝 Andre is now available for hire"}
+          </motion.a>
         </div>
-      </div>
+      </motion.header>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+      <section
+        id="hero-wrapper"
+        className="w-full h-[calc(100vh-64px)] relative"
+      >
+        <div
+          id="hero-container"
+          className="grid grid-cols-2 container m-auto w-full h-full"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+          <motion.div
+            id="left-side"
+            className="px-4 flex flex-col items-start my-[calc(50%-128px)] gap-4"
+            initial={{ x: "-150%" }}
+            animate={{ x: 0 }}
+            transition={{
+              type: "spring",
+              duration: 0.5,
+              stiffness: 50,
+              bounce: 5,
+              damping: 10,
+            }}
+          >
+            <h2 className="text-2xl flex font-bold text-start">
+              Hi!{" "}
+              <motion.div
+                whileHover={{
+                  scale: [1, 1.5, 1.5, 1],
+                  rotate: [0, 75, 75, 0, 75, 75, 0],
+                  transition: {
+                    duration: 0.4,
+                    ease: "easeInOut",
+                    delay: 0.4,
+                  },
+                }}
+              >
+                👋
+              </motion.div>{" "}
+              My name is{" "}
+            </h2>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+            <h1 className="text-9xl font-black text-start flex">
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="text-red-600 transition-colors"
+              >
+                A
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="hover:text-red-500 transition-colors"
+              >
+                n
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="hover:text-red-500 transition-colors"
+              >
+                d
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="hover:text-red-500 transition-colors"
+              >
+                r
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="hover:text-red-500 transition-colors"
+              >
+                e&nbsp;
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="text-red-600 transition-colors"
+              >
+                M
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="hover:text-red-500 transition-colors"
+              >
+                e
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="hover:text-red-500 transition-colors"
+              >
+                l
+              </motion.span>
+              <motion.span
+                whileHover={{ scale: [1, 1.3, 1.3, 1, 1.1, 1.1, 1] }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="hover:text-red-500 transition-colors"
+              >
+                o
+              </motion.span>
+            </h1>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
+            <h3 className="text-4xl text-start font-bold">
+              and I build stuff for the web
+            </h3>
+          </motion.div>
+          <div id="right-side"></div>
+        </div>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        <div
+          id="back-strip"
+          className="absolute bottom-40 h-20 bg-stone-600 opacity-20 w-[120vw] -translate-x-6 rotate-6"
+        ></div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          id="strip"
+          className="absolute bottom-32 h-28 bg-red-600 w-[120vw] -translate-x-6 -rotate-3"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+          <motion.ul
+            className="flex items-center justify-start h-full font-black gap-16 text-6xl list-disc text-red-200"
+            initial={{ x: 0 }}
+            animate={{ translateX: "-150%" }}
+            transition={{ duration: 120, repeat: Infinity }}
+            whileHover={{ translateX: "-150%", transition: { duration: 240 } }}
+          >
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Computer Science Aficcionado
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Businessman
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              3D Printer
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              UI/UX enthusiast
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Computer Science Aficcionado
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Businessman
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              3D Printer
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              UI/UX enthusiast
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Computer Science Aficcionado
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Businessman
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              3D Printer
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              UI/UX enthusiast
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Computer Science Aficcionado
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Businessman
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              3D Printer
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              UI/UX enthusiast
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Computer Science Aficcionado
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-300 transition-colors">
+              Businessman
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              3D Printer
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              UI/UX enthusiast
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              Computer Science Aficcionado
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              Businessman
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              3D Printer
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              UI/UX enthusiast
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              Computer Science Aficcionado
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              Businessman
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              3D Printer
+            </li>
+            <li className="min-w-fit list-item uppercase hover:text-yellow-500">
+              UI/UX enthusiast
+            </li>
+          </motion.ul>
+        </motion.div>
+      </section>
+
+      <motion.section
+        id="stack"
+        className="flex flex-col items-center justify-center gap-24 h-[calc(100vh/2)] w-full"
+        style={{ background }}
+      >
+        <h2 className="text-4xl">
+          I&apos;m a Fullstack developer and my main stack is:
+        </h2>
+
+        <motion.div
+          id="stack-techs-container"
+          className="flex flex-col md:flex-row gap-8"
+          whileInView={{ opacity: [0, 1] }}
+          // viewport={{ once: true }}
+          transition={{ delay: 0.5, duration: 2 }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          style={{ x }}
+        >
+          <NodeJSIcon className="relative h-32 w-32 fill-white bg-red-700 p-2 rounded" />
+
+          <ReactIcon className="relative h-32 w-32 fill-white bg-red-700 p-2 rounded" />
+
+          <JavascriptIcon className="relative h-32 w-32 fill-white bg-red-700 p-2 rounded" />
+        </motion.div>
+      </motion.section>
+
+      <section className="w-full h-[calc(100vh/2)] flex flex-col gap-24 items-center justify-center">
+        <h3 className="text-4xl">You can check most of my skills at:</h3>
+        <Link
+          href="https://github.com/afmelo92"
+          target="_blank"
+          className="relative h-32 w-32"
+        >
+          <GithubIcon className="relative h-32 w-32 fill-white bg-red-700 p-2 rounded hover:bg-white hover:fill-red-700 transition-colors" />
+        </Link>
+      </section>
+
+      <section className="w-full h-[calc(100vh/2)] flex flex-col gap-12 items-center justify-center">
+        <h3 className="text-4xl">
+          I also have a company called{" "}
+          <Link href="https://predatorlabs.com.br" target="_blank">
+            <strong className="font-bold text-transparent text-4xl bg-clip-text bg-gradient-to-r from-red-600 to-red-800">
+              Predator Labs
+            </strong>{" "}
+          </Link>
+          which provides:
+        </h3>
+        <ul className="max-w-fit h-auto flex-wrap flex gap-2 text-2xl items-start justify-center">
+          <motion.li
+            whileHover={{ scale: 1.2, outline: "4px solid white" }}
+            className="bg-gradient-to-r from-red-600 to-red-800 p-2 rounded"
+          >
+            Software development
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.2, outline: "4px solid white" }}
+            className="bg-gradient-to-r from-red-600 to-red-800 p-2 rounded"
+          >
+            Landing pages
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.2, outline: "4px solid white" }}
+            className="bg-gradient-to-r from-red-600 to-red-800 p-2 rounded"
+          >
+            Websites
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.2, outline: "4px solid white" }}
+            className="bg-gradient-to-r from-red-600 to-red-800 p-2 rounded"
+          >
+            Web Traffic / SEO
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.2, outline: "4px solid white" }}
+            className="bg-gradient-to-r from-red-600 to-red-800 p-2 rounded"
+          >
+            Digital positioning
+          </motion.li>
+          <motion.li
+            whileHover={{ scale: 1.2, outline: "4px solid white" }}
+            className="bg-gradient-to-r from-red-600 to-red-800 p-2 rounded"
+          >
+            and more...
+          </motion.li>
+        </ul>
+      </section>
+
+      <section className="w-full h-[calc(100vh/2)] flex flex-col gap-12 items-center justify-center">
+        <h3 className="text-4xl">If you wanna hire me, call me at:</h3>
+        <div id="links-container" className="flex gap-8">
+          <Link href="mailto:andre@afmelo.com" id="mail-icon">
+            <MailIcon className="stroke-2 stroke-white fill-red-700 p-2 w-32 h-32 bg-red-700 rounded hover:bg-white hover:fill-white hover:stroke-red-700 transition-colors" />
+          </Link>
+          <Link
+            href="https://api.whatsapp.com/send?phone=5541999013657&text=Hey%20Andre!%20I%20wanna%20hire%20you."
+            target="_blank"
+            id="mail-icon"
+          >
+            <WhatsappIcon className="fill-white p-2 w-32 h-32 bg-red-700 rounded hover:bg-white hover:fill-red-700 transition-colors" />
+          </Link>
+        </div>
+      </section>
+
+      <section className="w-full h-[calc(100vh/2)] flex flex-col gap-12 items-center justify-center">
+        <h3 className="text-4xl">
+          Below you probably will find some random test stuff. Enjoy!
+        </h3>
+      </section>
     </main>
-  )
+  );
 }
